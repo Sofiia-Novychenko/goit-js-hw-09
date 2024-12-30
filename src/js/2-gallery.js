@@ -4,6 +4,25 @@ let formData = {
 };
 const feedbackFormEl = document.querySelector('.feedback-form');
 
+const getFormDataFromLS = () => {
+  try {
+    const formDataFromLS = JSON.parse(localStorage.getItem('feedback-form-state'));
+    if (formDataFromLS === null) {
+      return;
+    }
+    formData = formDataFromLS;
+
+    for (const key in formData) {
+      if (formData.hasOwnProperty(key)) {
+        feedbackFormEl.elements[key].value = formData[key];
+      }
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+getFormDataFromLS();
+
 const saveToLS = (key, data) => {
   try {
     localStorage.setItem(key, JSON.stringify(data));
@@ -12,30 +31,9 @@ const saveToLS = (key, data) => {
   }
 };
 
-const load = key => {
-  try {
-    const dataFromLS = localStorage.getItem(key);
-
-    return dataFromLS === null ? undefined : JSON.parse(dataFromLS);
-  } catch (err) {
-    console.log(err);
-  }
-};
-
-const getFormDataFromLS = () => {
-  const formDataFromLS = load('feedback-form-state');
-
-  formData = formDataFromLS;
-
-  for (const key in formDataFromLS) {
-    feedbackFormEl.elements[key].value = formDataFromLS[key];
-  }
-};
-getFormDataFromLS();
-
 const onFormFieldInput = event => {
   const formFieldEl = event.target;
-  const fieldValue = formFieldEl.value;
+  const fieldValue = formFieldEl.value.trim();
   const fieldName = formFieldEl.name;
 
   formData[fieldName] = fieldValue;
@@ -45,8 +43,18 @@ const onFormFieldInput = event => {
 
 const onFeedbackFormSubmit = event => {
   event.preventDefault();
-  event.currentTarget.reset();
+
+  if (formData.email.trim() === '' || formData.message.trim() === '') {
+    alert('Fill please all fields');
+    return;
+  }
+  console.log('Submitted data:', formData);
+
   localStorage.removeItem('feedback-form-state');
+
+  formData = { email: '', message: '' };
+
+  event.currentTarget.reset();
 };
 feedbackFormEl.addEventListener('input', onFormFieldInput);
 feedbackFormEl.addEventListener('submit', onFeedbackFormSubmit);
