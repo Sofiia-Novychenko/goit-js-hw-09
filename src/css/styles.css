@@ -1,4 +1,9 @@
 @import 'simplelightbox/dist/simple-lightbox.min.css';
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 body {
   font-family: 'Montserrat', sans-serif;
   color: #2e2f42;
@@ -70,4 +75,67 @@ ul {
 
 .sl-counter {
   color: #fff !important;
+}
+
+input,
+textarea {
+  display: block;
+  padding: 8px 16px;
+  border: 1px solid #808080;
+  border-radius: 4px;
+  width: 100%;
+  height: 40px;
+  background-color: transparent;
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  outline: transparent;
+  transition: border 0.1s ease;
+}
+input:hover,
+input:focus,
+textarea:hover,
+textarea:focus {
+  border: 2px solid #2e2f42;
+}
+textarea {
+  height: 80px;
+  resize: none;
+}
+
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  width: 360px;
+  margin: 0 auto;
+  padding-top: 24px;
+}
+label {
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+
+  display: block;
+  margin-bottom: 8px;
+}
+.submit-btn {
+  margin-top: 8px;
+  border-radius: 8px;
+  padding: 8px 16px;
+  width: 95px;
+  height: 40px;
+  background: #4e75ff;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: #fff;
+  border: none;
+  display: block;
+  transition: background-color 0.1s ease;
+}
+
+.submit-btn:hover {
+  background-color: #6c8cff;
 }
